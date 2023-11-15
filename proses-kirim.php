@@ -9,17 +9,19 @@ $pesan = $_POST['pesan'];
 $message = "Nama: $nama\nEmail: $email\nPesan: $pesan";
 
 $telegram_url = "https://api.telegram.org/bot$token/sendMessage";
-$params = [
+
+// Menambahkan data langsung ke URL untuk menghindari ketergantungan pada cookies
+$telegram_url .= '?' . http_build_query([
     'chat_id' => $chat_id,
     'text' => $message,
-];
+]);
 
 $ch = curl_init($telegram_url);
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_exec($ch);
-curl_close($ch);
 
-echo "Pesan telah dikirim ke Telegram!";
-?>
+// Mengatur metode permintaan menjadi GET dan mengabaikan setiap cookie
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+curl_setopt($ch, CURLOPT_HEADER, false);
+
+// Menjalankan permintaan
+$response = curl_exec($ch);
