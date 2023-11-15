@@ -1,6 +1,6 @@
 <?php
-$token = "TOKEN_BOT_ANDA";
-$chat_id = "CHAT_ID_ANDA";
+$token = "5941934417:AAHpA0NTtLqPtQj4ePV-3GrvD_F2u967Z4I";
+$chat_id = "677083459";
 
 $nama = $_POST['nama'];
 $email = $_POST['email'];
